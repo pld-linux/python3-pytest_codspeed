@@ -6,7 +6,7 @@ Summary:	Pytest plugin to create CodSpeed benchmarks
 # Name must match the python module/package name (as on pypi or in 'import' statement)
 Name:		python3-%{module}
 Version:	3.2.0
-Release:	1
+Release:	2
 License:	MIT
 Group:		Libraries/Python
 Source0:	https://pypi.debian.net/%{module}/%{module}-%{version}.tar.gz
@@ -21,7 +21,16 @@ BuildRequires:	python3-modules >= 1:3.2
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 2.044
 Requires:	python3-modules >= 1:3.2
+%ifnarch %{x8664}
+BuildArch:	noarch
+%endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%ifnarch %{x8664}
+%define	extdir	%{py3_sitescriptdir}
+%else
+%define	extdir	%{py3_sitedir}
+%endif
 
 %description
 Creating benchmarks with pytest-codspeed is compatible with the
@@ -53,18 +62,20 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README.md
-%dir %{py3_sitedir}/%{module}
-%{py3_sitedir}/%{module}/*.py
-%{py3_sitedir}/%{module}/py.typed
-%{py3_sitedir}/%{module}/__pycache__/*.py*
-%{py3_sitedir}/%{module}/instruments/*.py
-%{py3_sitedir}/%{module}/instruments/__pycache__/*.py*
-%{py3_sitedir}/%{module}/instruments/valgrind/*.py
-%{py3_sitedir}/%{module}/instruments/valgrind/__pycache__/*.py*
-%dir %{py3_sitedir}/%{module}/instruments/valgrind/_wrapper
-%{py3_sitedir}/%{module}/instruments/valgrind/_wrapper/__pycache__/*.py*
-%{py3_sitedir}/%{module}/instruments/valgrind/_wrapper/*.py
-%{py3_sitedir}/%{module}/instruments/valgrind/_wrapper/*.[chi]
-%{py3_sitedir}/%{module}/instruments/valgrind/_wrapper/*.pyi
-%attr(755,root,root) %{py3_sitedir}/%{module}/instruments/valgrind/_wrapper/*.so
-%{py3_sitedir}/%{module}-%{version}.dist-info
+%dir %{extdir}/%{module}
+%{extdir}/%{module}/*.py
+%{extdir}/%{module}/py.typed
+%{extdir}/%{module}/__pycache__/*.py*
+%{extdir}/%{module}/instruments/*.py
+%{extdir}/%{module}/instruments/__pycache__/*.py*
+%{extdir}/%{module}/instruments/valgrind/*.py
+%{extdir}/%{module}/instruments/valgrind/__pycache__/*.py*
+%dir %{extdir}/%{module}/instruments/valgrind/_wrapper
+%{extdir}/%{module}/instruments/valgrind/_wrapper/__pycache__/*.py*
+%{extdir}/%{module}/instruments/valgrind/_wrapper/*.py
+%{extdir}/%{module}/instruments/valgrind/_wrapper/*.[chi]
+%{extdir}/%{module}/instruments/valgrind/_wrapper/*.pyi
+%if "%{extdir}" == "%{py3_sitedir}"
+%attr(755,root,root) %{extdir}/%{module}/instruments/valgrind/_wrapper/*.so
+%endif
+%{extdir}/%{module}-%{version}.dist-info
