@@ -1,0 +1,12 @@
+diff -ur pytest_codspeed-3.2.0.org/setup.py pytest_codspeed-3.2.0/setup.py
+--- pytest_codspeed-3.2.0.org/setup.py	2025-01-31 15:23:55.000000000 +0100
++++ pytest_codspeed-3.2.0/setup.py	2025-02-24 09:12:29.210730037 +0100
+@@ -20,7 +20,7 @@
+ 
+ print(f"System: {system} ({current_arch})")
+ 
+-IS_EXTENSION_BUILDABLE = system == "Linux" and current_arch in [
++IS_EXTENSION_BUILDABLE = 1 or system == "Linux" and current_arch in [
+     "x86_64",
+     "aarch64",
+ ]

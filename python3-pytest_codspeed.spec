@@ -11,6 +11,7 @@ License:	MIT
 Group:		Libraries/Python
 Source0:	https://pypi.debian.net/%{module}/%{module}-%{version}.tar.gz
 # Source0-md5:	1af7148ae89f3820b3a3778312ff3b60
+Patch0:		noarchlimit.patch
 URL:		https://pypi.org/project/pytest-codspeed/
 BuildRequires:	python3-build
 BuildRequires:	python3-installer
@@ -31,8 +32,10 @@ written with it, you can start using pytest-codspeed right away.
 
 %prep
 %setup -q -n %{module}-%{version}
+%patch -P0 -p1
 
 %build
+PYTEST_CODSPEED_FORCE_EXTENSION_BUILD=1; export PYTEST_CODSPEED_FORCE_EXTENSION_BUILD
 %py3_build_pyproject
 
 %if %{with tests}
