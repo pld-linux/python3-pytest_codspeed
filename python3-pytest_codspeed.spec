@@ -21,12 +21,13 @@ BuildRequires:	python3-pytest
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 2.044
 Requires:	python3-modules >= 1:3.2
-%ifnarch %{x8664}
+BuildRequires:	valgrind
+%ifnarch %{x8664} x32
 BuildArch:	noarch
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%ifnarch %{x8664}
+%ifnarch %{x8664} x32
 %define	extdir	%{py3_sitescriptdir}
 %else
 %define	extdir	%{py3_sitedir}
