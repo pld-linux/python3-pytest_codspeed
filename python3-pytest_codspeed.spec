@@ -1,12 +1,12 @@
 # Conditional build:
-%bcond_without	tests	# unit tests
+%bcond_with	tests	# unit tests
 
 %define		module	pytest_codspeed
 Summary:	Pytest plugin to create CodSpeed benchmarks
 # Name must match the python module/package name (as on pypi or in 'import' statement)
 Name:		python3-%{module}
 Version:	3.2.0
-Release:	2
+Release:	3
 License:	MIT
 Group:		Libraries/Python
 Source0:	https://pypi.debian.net/%{module}/%{module}-%{version}.tar.gz
@@ -16,7 +16,7 @@ BuildRequires:	python3-build
 BuildRequires:	python3-installer
 BuildRequires:	python3-modules >= 1:3.2
 %if %{with tests}
-#BuildRequires:	python3-
+BuildRequires:	python3-pytest
 %endif
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 2.044
@@ -65,13 +65,13 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{extdir}/%{module}
 %{extdir}/%{module}/*.py
 %{extdir}/%{module}/py.typed
-%{extdir}/%{module}/__pycache__/*.py*
+%{extdir}/%{module}/__pycache__
 %{extdir}/%{module}/instruments/*.py
-%{extdir}/%{module}/instruments/__pycache__/*.py*
+%{extdir}/%{module}/instruments/__pycache__
 %{extdir}/%{module}/instruments/valgrind/*.py
-%{extdir}/%{module}/instruments/valgrind/__pycache__/*.py*
+%{extdir}/%{module}/instruments/valgrind/__pycache__
 %dir %{extdir}/%{module}/instruments/valgrind/_wrapper
-%{extdir}/%{module}/instruments/valgrind/_wrapper/__pycache__/*.py*
+%{extdir}/%{module}/instruments/valgrind/_wrapper/__pycache__
 %{extdir}/%{module}/instruments/valgrind/_wrapper/*.py
 %{extdir}/%{module}/instruments/valgrind/_wrapper/*.[chi]
 %{extdir}/%{module}/instruments/valgrind/_wrapper/*.pyi
