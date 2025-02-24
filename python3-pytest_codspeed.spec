@@ -22,16 +22,7 @@ BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 2.044
 Requires:	python3-modules >= 1:3.2
 BuildRequires:	valgrind
-%ifnarch %{x8664} x32
-BuildArch:	noarch
-%endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%ifnarch %{x8664} x32
-%define	extdir	%{py3_sitescriptdir}
-%else
-%define	extdir	%{py3_sitedir}
-%endif
 
 %description
 Creating benchmarks with pytest-codspeed is compatible with the
@@ -63,20 +54,20 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README.md
-%dir %{extdir}/%{module}
-%{extdir}/%{module}/*.py
-%{extdir}/%{module}/py.typed
-%{extdir}/%{module}/__pycache__
-%{extdir}/%{module}/instruments/*.py
-%{extdir}/%{module}/instruments/__pycache__
-%{extdir}/%{module}/instruments/valgrind/*.py
-%{extdir}/%{module}/instruments/valgrind/__pycache__
-%dir %{extdir}/%{module}/instruments/valgrind/_wrapper
-%{extdir}/%{module}/instruments/valgrind/_wrapper/__pycache__
-%{extdir}/%{module}/instruments/valgrind/_wrapper/*.py
-%{extdir}/%{module}/instruments/valgrind/_wrapper/*.[chi]
-%{extdir}/%{module}/instruments/valgrind/_wrapper/*.pyi
-%if "%{extdir}" == "%{py3_sitedir}"
-%attr(755,root,root) %{extdir}/%{module}/instruments/valgrind/_wrapper/*.so
+%dir %{py3_sitedir}/%{module}
+%{py3_sitedir}/%{module}/*.py
+%{py3_sitedir}/%{module}/py.typed
+%{py3_sitedir}/%{module}/__pycache__
+%{py3_sitedir}/%{module}/instruments/*.py
+%{py3_sitedir}/%{module}/instruments/__pycache__
+%{py3_sitedir}/%{module}/instruments/valgrind/*.py
+%{py3_sitedir}/%{module}/instruments/valgrind/__pycache__
+%dir %{py3_sitedir}/%{module}/instruments/valgrind/_wrapper
+%{py3_sitedir}/%{module}/instruments/valgrind/_wrapper/__pycache__
+%{py3_sitedir}/%{module}/instruments/valgrind/_wrapper/*.py
+%{py3_sitedir}/%{module}/instruments/valgrind/_wrapper/*.[chi]
+%{py3_sitedir}/%{module}/instruments/valgrind/_wrapper/*.pyi
+%if "%{py3_sitedir}" == "%{py3_sitedir}"
+%attr(755,root,root) %{py3_sitedir}/%{module}/instruments/valgrind/_wrapper/*.so
 %endif
-%{extdir}/%{module}-%{version}.dist-info
+%{py3_sitedir}/%{module}-%{version}.dist-info
