@@ -6,7 +6,7 @@ Summary:	Pytest plugin to create CodSpeed benchmarks
 # Name must match the python module/package name (as on pypi or in 'import' statement)
 Name:		python3-%{module}
 Version:	3.2.0
-Release:	3
+Release:	4
 License:	MIT
 Group:		Libraries/Python
 Source0:	https://pypi.debian.net/%{module}/%{module}-%{version}.tar.gz
@@ -61,8 +61,10 @@ rm -rf $RPM_BUILD_ROOT
 %{py3_sitedir}/%{module}/*.py
 %{py3_sitedir}/%{module}/py.typed
 %{py3_sitedir}/%{module}/__pycache__
+%dir %{py3_sitedir}/%{module}/instruments
 %{py3_sitedir}/%{module}/instruments/*.py
 %{py3_sitedir}/%{module}/instruments/__pycache__
+%dir %{py3_sitedir}/%{module}/instruments/valgrind
 %{py3_sitedir}/%{module}/instruments/valgrind/*.py
 %{py3_sitedir}/%{module}/instruments/valgrind/__pycache__
 %dir %{py3_sitedir}/%{module}/instruments/valgrind/_wrapper
@@ -70,7 +72,5 @@ rm -rf $RPM_BUILD_ROOT
 %{py3_sitedir}/%{module}/instruments/valgrind/_wrapper/*.py
 %{py3_sitedir}/%{module}/instruments/valgrind/_wrapper/*.[chi]
 %{py3_sitedir}/%{module}/instruments/valgrind/_wrapper/*.pyi
-%if "%{py3_sitedir}" == "%{py3_sitedir}"
 %attr(755,root,root) %{py3_sitedir}/%{module}/instruments/valgrind/_wrapper/*.so
-%endif
 %{py3_sitedir}/%{module}-%{version}.dist-info
