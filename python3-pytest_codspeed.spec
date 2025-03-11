@@ -6,7 +6,7 @@ Summary:	Pytest plugin to create CodSpeed benchmarks
 # Name must match the python module/package name (as on pypi or in 'import' statement)
 Name:		python3-%{module}
 Version:	3.2.0
-Release:	5
+Release:	6
 License:	MIT
 Group:		Libraries/Python
 Source0:	https://pypi.debian.net/%{module}/%{module}-%{version}.tar.gz
