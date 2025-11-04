@@ -6,13 +6,13 @@
 Summary:	Pytest plugin to create CodSpeed benchmarks
 Summary(pl.UTF-8):	Wtyczka pytesta do tworzenia benchmarków CodSpeed
 Name:		python3-%{module}
-Version:	4.0.0
+Version:	4.2.0
 Release:	1
 License:	MIT
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/pytest-codspeed/
 Source0:	https://files.pythonhosted.org/packages/source/p/pytest_codspeed/%{module}-%{version}.tar.gz
-# Source0-md5:	0efbc7d3920ab6e47a531a02c5b8fcd4
+# Source0-md5:	6b0fc18c07596207513a4447e8a35199
 Patch0:		noarchlimit.patch
 URL:		https://pypi.org/project/pytest-codspeed/
 BuildRequires:	python3-build
