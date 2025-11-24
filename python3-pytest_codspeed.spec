@@ -45,6 +45,11 @@ Wtyczka pytesta do tworzenia benchmarków CodSpeed.
 
 %build
 export PYTEST_CODSPEED_FORCE_EXTENSION_BUILD=1
+%if "%{_ver_ge %{cc_version} 15.0}" == "1"
+# lower standard to C17; in C23 mode code enables using "[[noreturn]]", which
+# gcc doesn't allow to mix with other attributes in order used in this package
+CFLAGS="%{rpmcflags} -std=c17"
+%endif
 
 %py3_build_pyproject
 
