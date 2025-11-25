@@ -33,6 +33,10 @@ Requires:	python3-modules >= 1:3.9
 BuildRequires:	valgrind
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+%ifnarch %{x8664} aarch64
+%define		_enable_debug_packages	0
+%endif
+
 %description
 Pytest plugin to create CodSpeed benchmarks.
 
@@ -68,6 +72,12 @@ rm -rf $RPM_BUILD_ROOT
 # module sources
 %{__rm} -r $RPM_BUILD_ROOT%{py3_sitedir}/pytest_codspeed/instruments/hooks/instrument-hooks
 
+%ifnarch %{x8664} aarch64
+# C sources pregenerated from zig expect LP64 arch with _Float16 support;
+# otherwhere, drop stub module (which is built just not to place package in noarch dir)
+%{__rm} $RPM_BUILD_ROOT%{py3_sitedir}/%{module}/instruments/hooks/dist_instrument_hooks.*.so
+%endif
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -82,7 +92,9 @@ rm -rf $RPM_BUILD_ROOT
 %{py3_sitedir}/%{module}/instruments/*.py
 %{py3_sitedir}/%{module}/instruments/__pycache__
 %dir %{py3_sitedir}/%{module}/instruments/hooks
+%ifarch %{x8664} aarch64
 %attr(755,root,root) %{py3_sitedir}/%{module}/instruments/hooks/dist_instrument_hooks.cpython-*.so
+%endif
 %{py3_sitedir}/%{module}/instruments/hooks/dist_instrument_hooks.pyi
 %{py3_sitedir}/%{module}/instruments/hooks/*.py
 %{py3_sitedir}/%{module}/instruments/hooks/__pycache__
